@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// хранит глобальную конфигурацию и зависимости сервиса
 type Application struct {
 	Port        int
 	JWTSecret   string
@@ -16,6 +17,7 @@ type Application struct {
 	UserService user.Service
 }
 
+// настраивает все HTTP-маршруты и middleware сервера
 func (app *Application) Routes() nethttp.Handler {
 	r := gin.Default()
 
@@ -25,9 +27,11 @@ func (app *Application) Routes() nethttp.Handler {
 
 	v1 := r.Group("/api/v1")
 
+	// маршруты для работы с пользователями
 	users := v1.Group("/users")
 	NewUserHandler(users, app.UserService, app.JWTSecret)
 
+	// маршруты для работы с событиями, защищенные JWT
 	events := v1.Group("/events")
 	events.Use(security.JWTMiddleware(app.JWTSecret))
 	{

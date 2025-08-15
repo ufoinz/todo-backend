@@ -12,6 +12,7 @@ type Config struct {
 	Router nethttp.Handler
 }
 
+// Start поднимает HTTP-сервер с базовыми таймаутами и роутером из cfg
 func Start(cfg Config) error {
 	server := &nethttp.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),

@@ -2,6 +2,7 @@ package event
 
 import "time"
 
+// Создание сущности события, принадлежащего конкретному пользователю
 type Event struct {
 	ID      int64     `gorm:"primaryKey" json:"id"`
 	OwnerId int64     `gorm:"not null" json:"owner_id"`
